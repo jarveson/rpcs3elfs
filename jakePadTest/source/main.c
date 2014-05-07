@@ -7,7 +7,8 @@
 #include <unistd.h>
 #include <sysutil/video.h>
 #include <rsx/rsx.h>
-#include <io/pad.h>
+//#include <io/pad.h> //psl1ght defines padcapabilites wrong
+#include "pad.h"
 
 #include "sconsole.h"
 
@@ -115,7 +116,7 @@ void setupUsTheBuffer(int theBuffer){
 	print(370, 66, "R1: ", buffers[theBuffer]->ptr);
 
 	print(370, 90, "TRI: ", buffers[theBuffer]->ptr);
-	print(330, 106, "SQR: ", buffers[theBuffer]->ptr);
+	print(330, 106, "SQR:          CIR: ", buffers[theBuffer]->ptr);
 	print(365, 122, "CROSS: ", buffers[theBuffer]->ptr);
 
 	//analog
@@ -125,7 +126,7 @@ void setupUsTheBuffer(int theBuffer){
 	print(265, 161, "LVert: ", buffers[theBuffer]->ptr);
 
 	//capabilities stuff
-	print(10, 206, "Controller Capabilities -", buffers[theBuffer]->ptr);
+	print(10, 206, "Controller Capabilities v1 api-", buffers[theBuffer]->ptr);
 	print(20, 222, "PS3 spec(ps button and port light): ", buffers[theBuffer]->ptr);
 	print(20, 238, "Pressure Sensitive: ", buffers[theBuffer]->ptr);
 	print(20, 254, "Six-axis support: ", buffers[theBuffer]->ptr);
@@ -150,6 +151,8 @@ s32 main(s32 argc, const char* argv[])
 	padcapinfo.has_pressure = 0;
 	padcapinfo.has_sensors = 0;
 	padcapinfo.has_vibrate = 0;
+	padcapinfo.has_hps = 0;	
+
 	int i, contnum;
 	
 
@@ -181,7 +184,7 @@ s32 main(s32 argc, const char* argv[])
 				ioPadGetData(i, &paddata);
 				contnum = i;
 				//enable this after its working
-				//ioPadGetCapabilityInfo(i, &padcapinfo);
+				ioPadGetCapabilityInfo(i, &padcapinfo);
 				//if(paddata.BTN_CROSS)
 				//	return 0;
 			}
@@ -189,6 +192,8 @@ s32 main(s32 argc, const char* argv[])
 		}
 
 	//left aka digital 1
+	sprintf(ts, "L3: %d", paddata.BTN_L3);
+	print(122, 34, ts, buffers[currentBuffer]->ptr);
 	sprintf(ts, "%d-%03d", paddata.BTN_L2, paddata.PRE_L2);
 	print(122, 50, ts, buffers[currentBuffer]->ptr);
 	sprintf(ts, "%d-%03d", paddata.BTN_L1, paddata.PRE_L1);
@@ -211,6 +216,8 @@ s32 main(s32 argc, const char* argv[])
 	print(318, 90, ts, buffers[currentBuffer]->ptr);
 
 	//right buttons
+	sprintf(ts, "R3: %d", paddata.BTN_R3);
+	print(402, 34, ts, buffers[currentBuffer]->ptr);
 	sprintf(ts, "%d-%03d", paddata.BTN_R2, paddata.PRE_R2);
 	print(402, 50, ts, buffers[currentBuffer]->ptr);
 	sprintf(ts, "%d-%03d", paddata.BTN_R1, paddata.PRE_R1);
@@ -257,6 +264,10 @@ s32 main(s32 argc, const char* argv[])
 	print(212, 386, ts, buffers[currentBuffer]->ptr);
 	sprintf(ts, "0x%X", padinfo.port_status[contnum]);
 	print(124, 402, ts, buffers[currentBuffer]->ptr);
+
+	//lets try new paddata capabilities	
+	sprintf(ts, "PadInfo.v2 capabilites: 0x%X", padinfo.device_capability[contnum]);
+	print(20, 418, ts, buffers[currentBuffer]->ptr);
 
 	waitFlip();
 	flip(currentBuffer);
