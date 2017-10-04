@@ -12,7 +12,7 @@ int main(uint64_t arg1, uint64_t arg2, uint64_t arg3, uint64_t arg4)
 	(void)arg4;
 
     char scratchBuf[8192] __attribute__((aligned(128))) = {0};
-    char failedBuf[64000] = {0};
+    char failedBuf[65536] = {0};
 
     spu_printf("Starting and running tests\n");
 
