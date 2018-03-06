@@ -1,0 +1,5 @@
+local_mem_heap: 0xc0000000
+initial 'valid' vertex_offsets 0xa8c400, 0xa8c40c
+using 0x1f233d00 as vertex base
+setting vertex pos addr to 0x1858700
+setting vertex color addr to 0x185870c
