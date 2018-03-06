@@ -1,0 +1,9 @@
+sys_raw_spu_create succeeded. raw_spu number is 0
+stack loc: d0019f60
+Hello, World 1
+Hello, World 2
+a, 12, 20, 0x1e, 0X28,   50, "test"
+stack loc: d0019f60
+stack loc: d0019f60
+stack loc: d0019f60
+Destroying Raw SPU 0
