@@ -1,0 +1,16 @@
+sys_memory test start.
+sys_memory_get_user_memory_size:
+userMem total: 0xd500000
+userMem avail: 0xd1ac000
+allocated 0x10000 at 0x100c0000
+sys_memory_get_user_memory_size:
+userMem total: 0xd500000
+userMem avail: 0xd19c000
+allocated full size
+sys_memory_get_user_memory_size:
+userMem total: 0x400000
+userMem avail: 0xac000
+sys_memory_container_get_size:
+userMem total: 0xd100000
+userMem avail: 0xd100000
+sample finished.
